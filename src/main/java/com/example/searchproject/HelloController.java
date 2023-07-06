@@ -1,8 +1,12 @@
+// Rami Atrash 1191900
+// Mohammad Alkhateeb 1192545
+// Section 2
 package com.example.searchproject;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -17,8 +21,9 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class HelloController {
-
-    private Graph graph;
+    // this is a flag. when the user presses any button on the map the system will put that city on a comboBox. this variable is going to determine
+    // which comboBox to add the city to.
+    private short comboBoxTurn = 0;
     private File citiesFile;
     private File roadsFile;
     private File airDistanceFile;
@@ -53,6 +58,8 @@ public class HelloController {
     private Text txtTotalCost;
     @FXML
     private Text txtTotalTime;
+    @FXML
+    private Text txtTimeComplexity;
 
     @FXML
     void choseCitiesFile(ActionEvent event) {
@@ -61,40 +68,36 @@ public class HelloController {
     @FXML
     void openCitiesFileChooser(ActionEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
-        File initialDirectory = new File("C:\\Users\\r4mim\\IdeaProjects\\SearchProject\\src\\main\\resources");
-        fc.setInitialDirectory(initialDirectory);
         citiesFile = fc.showOpenDialog(null);
 
         if (citiesFile != null){
-            readCitiesFile(citiesFile);
-            if (isAllInputsSelected()){
-                searchBtn.setDisable(false);
+            if (readCitiesFile(citiesFile)){
+                if (isAllInputsSelected()){
+                    searchBtn.setDisable(false);
+                }
+                roadsFileChooserBtn.setDisable(false);
             }
-            roadsFileChooserBtn.setDisable(false);
         }
     }
 
     @FXML
     void openRoadsFileChooser(ActionEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
-        File initialDirectory = new File("C:\\Users\\r4mim\\IdeaProjects\\SearchProject\\src\\main\\resources");
-        fc.setInitialDirectory(initialDirectory);
         roadsFile = fc.showOpenDialog(null);
 
         if (roadsFile != null){
-            readRoadsFile();
-            if (isAllInputsSelected()){
-                searchBtn.setDisable(false);
+            if (readRoadsFile()){
+                if (isAllInputsSelected()){
+                    searchBtn.setDisable(false);
+                }
+                airDistanceFileChooserBtn.setDisable(false);
             }
-            airDistanceFileChooserBtn.setDisable(false);
         }
     }
 
     @FXML
     void openAirDistanceFileChooser(ActionEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
-        File initialDirectory = new File("C:\\Users\\r4mim\\IdeaProjects\\SearchProject\\src\\main\\resources");
-        fc.setInitialDirectory(initialDirectory);
         airDistanceFile = fc.showOpenDialog(null);
         // after choosing the file, this code will check if its valid using the isValidFile method
         if (airDistanceFile != null){
@@ -105,7 +108,7 @@ public class HelloController {
         }
     }
 
-    void readCitiesFile(File selectedFile) throws FileNotFoundException { // this method will read the cities file
+    boolean readCitiesFile(File selectedFile) throws FileNotFoundException { // this method will read the cities file
         Scanner scanner = new Scanner(selectedFile);
         try{
             while (scanner.hasNext()){
@@ -117,12 +120,17 @@ public class HelloController {
                 cities.add(city); // add the new city to the array of all cities
             }
             putOnMap();
+            return true;
         }catch (Exception e){
-                System.out.println("Error reading cities file: " + e);
+            System.out.println("Error reading cities file: " + e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("File format Error. Try another file.");
+            alert.show();
+            return false;
         }
     }
 
-    void readRoadsFile() throws FileNotFoundException {
+    boolean readRoadsFile() throws FileNotFoundException {
         // This method will read the roads file and get the data from it
         // then for each city of the cities, the code will add the adjacent cities for that city in its hash map with the cost for each one.
         Scanner scanner = new Scanner(roadsFile);
@@ -150,9 +158,13 @@ public class HelloController {
                 }
                 city.adjacentCities.put(adjacentCity, cost); // add the adjacency
             }
-
+            return true;
         }catch (Exception e){
             System.out.println("Error reading roads file: " + e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("File format Error. Try another file.");
+            alert.show();
+            return false;
         }
     }
 
@@ -188,6 +200,9 @@ public class HelloController {
             }
         }catch (Exception e){
             System.out.println("Error reading air distance file: " + e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("File format Error. Try another file.");
+            alert.show();
         }
     }
 
@@ -215,6 +230,18 @@ public class HelloController {
             button.setMinWidth(10);
             button.setStyle("-fx-background-color: #00C4FF; " +
                     "-fx-background-radius: 100px; ");
+
+            // when we add the buttons that will appear on the map for each city, this code will add an event listener for each button
+            // so when the user presses the button, the city will be selected in one of the comboBoxes depending on the comboBox turn
+            button.setOnAction((event) -> {
+                if (comboBoxTurn == 0){
+                    sourceComboBox.setValue(city.getName());
+                    comboBoxTurn = 1;
+                }else{
+                    destinationComboBox.setValue(city.getName());
+                    comboBoxTurn = 0;
+                }
+            });
 
             Label label = new Label(city.getName());
             label.setLayoutX(city.getX() + 5);
@@ -272,66 +299,12 @@ public class HelloController {
         return false;
     }
 
-//    List<City> AStar(City start, City goal){
-//        long startTime = System.nanoTime(); // capture the starting time
-//
-//        HashMap<City, Integer> openList = new HashMap<>();
-//        HashMap<City, Integer> closedList = new HashMap<>();
-//        HashMap<City, City> parent = new HashMap<>();
-//
-//        openList.put(start, 0);
-//
-//        City currentCity = null;
-//        while (!openList.isEmpty()){
-//            currentCity = findMinCost(openList);
-//
-//            int currentCityCost = openList.get(currentCity);
-//
-//            openList.remove(currentCity);
-//
-//            if (currentCity == goal){
-//                System.out.println("We found a solution!!");
-//                // Capture the end time
-//                long endTime = System.nanoTime();
-//
-//                // Calculate the elapsed time
-//                long elapsedTime = endTime - startTime;
-//                System.out.println(elapsedTime);
-//                txtTotalTime.setText("Total time: " + elapsedTime);
-//                return reconstructPath(parent, goal);
-//            }
-//
-//            for (Map.Entry<City, Integer> neighbor : currentCity.adjacentCities.entrySet()){
-//                int currentNeighborCost = findCost(currentCityCost, currentCity, neighbor.getKey(), goal);
-//
-//                if (openList.containsKey(neighbor.getKey())){
-//                    if (openList.get(neighbor.getKey()) <= currentNeighborCost){
-//                        continue;
-//                    }
-//                }else if(closedList.containsKey(neighbor.getKey())){
-//                    if (closedList.get(neighbor.getKey()) <= currentNeighborCost){
-//                        continue;
-//                    }
-//                    openList.put(neighbor.getKey(), neighbor.getValue());
-//                    closedList.remove(neighbor.getKey());
-//                }else{
-//                    openList.put(neighbor.getKey(), currentNeighborCost);
-//                }
-//                parent.put(neighbor.getKey(), currentCity);
-//            }
-//            closedList.put(currentCity, currentCityCost);
-//        }
-//        if (currentCity != goal){
-//            System.out.println("Error finding path!!!!!!!!!!!!!!!!!");
-//        }
-//        return null;
-//    }
-//    implementation with priority queue
     public List<City> AStar(City start, City goal) {
         double startTime = System.nanoTime(); // capture the starting time
         Map<City, Integer> costSoFar = new HashMap<>();
-        Map<City, City> parent = new HashMap<>();
+        Map<City, City> parent = new HashMap<>(); // to get the path after the algorithm finishes
 
+        // the open list as a priority queue so each time the min cost search takes O(log v)
         PriorityQueue<City> openList = new PriorityQueue<>(Comparator.comparingInt(costSoFar::get));
         Set<City> closedList = new HashSet<>();
 
@@ -339,23 +312,22 @@ public class HelloController {
         openList.add(start);
 
         while (!openList.isEmpty()) {
-            City currentCity = openList.poll();
+            City currentCity = openList.poll(); // get the min cost city from the open list
 
-            if (currentCity == goal) {
+            if (currentCity == goal) { // it the city is the goal brake
                 System.out.println("We found a solution!!");
                 // Capture the end time
                 double endTime = System.nanoTime();
 
                 // Calculate the elapsed time
                 double elapsedTime = (endTime - startTime) / 1000;
-                System.out.println(elapsedTime);
                 txtTotalTime.setText("Total time: " + elapsedTime + " micro seconds" );
                 return reconstructPath(parent, goal);
             }
 
-            closedList.add(currentCity);
+            closedList.add(currentCity); // add the city to the closed list because the city is known now
 
-            for (Map.Entry<City, Integer> neighbor : currentCity.adjacentCities.entrySet()) {
+            for (Map.Entry<City, Integer> neighbor : currentCity.adjacentCities.entrySet()) { // loop over the adjacent cities for the current city
                 City neighborCity = neighbor.getKey();
                 int currentCityCost = costSoFar.getOrDefault(currentCity, Integer.MAX_VALUE);
                 int currentNeighborCost = findCost(currentCityCost, currentCity, neighborCity, goal);
@@ -376,6 +348,41 @@ public class HelloController {
         }
 
         System.out.println("Error finding path!");
+        return null;
+    }
+
+    public List<City> BFS(City start, City goal){
+        // capture the starting time
+        double startTime = System.nanoTime();
+
+        Map<City, City> parent = new HashMap<>(); // to get the path after the algorithm finishes
+        Queue<City> openList = new ArrayDeque<>();
+        ArrayList<City> closedList = new ArrayList<>();
+
+        openList.add(start);
+
+        while (!openList.isEmpty()){
+            City currentCity = openList.poll(); // get a city from the open list
+            closedList.add(currentCity);
+
+            if (currentCity == goal){ // if the city is the goal city we brake the loop
+                System.out.println("We found a solution!!");
+                // Capture the end time
+                double endTime = System.nanoTime();
+
+                // Calculate the elapsed time
+                double elapsedTime = (endTime - startTime) / 1000;
+                txtTotalTime.setText("Total time: " + elapsedTime + " micro seconds" );
+                return reconstructPath(parent, goal);
+            }
+
+            for (Map.Entry<City, Integer> neighbor : currentCity.adjacentCities.entrySet()){ // add all neighbors to the open list
+                if (!openList.contains(neighbor.getKey()) && !closedList.contains(neighbor.getKey())){
+                    openList.add(neighbor.getKey());
+                    parent.put(neighbor.getKey(), currentCity);
+                }
+            }
+        }
         return null;
     }
 
@@ -431,7 +438,14 @@ public class HelloController {
             }
         }
 
-        List<City> path =  AStar(startCity, goalCity);
+        if (algorithmComboBox.getValue().equals("A*")){
+            List<City> path =  AStar(startCity, goalCity);
+            txtTimeComplexity.setText("Time Complexity: O((V + E) * log V)");
+        }else {
+            List<City> path = BFS(startCity, goalCity);
+            txtTimeComplexity.setText("Time Complexity: O(V + E)");
+        }
+
     }
 
     private List<City> reconstructPath(Map<City, City> parent, City goal) {
@@ -459,7 +473,7 @@ public class HelloController {
             }
             totalCost += path.get(i).adjacentCities.get(path.get(i + 1));
         }
-        txtTotalCost.setText("Total cost: " + totalCost);
+        txtTotalCost.setText("Total cost: " + totalCost + "Km");
     }
 
     void constructPathString(List<City> path){
@@ -504,4 +518,5 @@ public class HelloController {
             mapPane.getChildren().add(line);
         }
     }
+
 }

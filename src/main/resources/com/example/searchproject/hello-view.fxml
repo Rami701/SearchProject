@@ -14,10 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1087.0" prefWidth="1583.0" style="-fx-background-color: #FFF5B8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.searchproject.HelloController">
+<AnchorPane style="-fx-background-color: #FFF5B8;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.searchproject.HelloController">
    <children>
-      
-      <ComboBox id="cb" fx:id="sourceComboBox" layoutX="1234.0" layoutY="82.0" prefHeight="38.0" prefWidth="172.0" style="-fx-background-radius: 10px; -fx-background-color: #00C4FF;">
+      <ComboBox id="cb" fx:id="sourceComboBox" layoutX="1621.0" layoutY="117.0" prefHeight="53.0" prefWidth="243.0" style="-fx-background-radius: 10px; -fx-background-color: #00C4FF;">
          <effect>
             <DropShadow height="9.04" offsetY="5.0" radius="1.7599999999999998" width="0.0">
                <color>
@@ -26,7 +25,7 @@
             </DropShadow>
          </effect>
       </ComboBox>
-      <Pane prefHeight="47.0" prefWidth="1586.0" style="-fx-background-color: #FFE7A0;">
+      <Pane prefHeight="47.0" prefWidth="1920.0" style="-fx-background-color: #FFE7A0;">
          <children>
             <Text layoutX="820.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shortest path finder" wrappingWidth="279.47015380859375">
                <font>
@@ -35,22 +34,22 @@
             </Text>
          </children>
       </Pane>
-      <Text layoutX="1136.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Source:" wrappingWidth="98.13675689697266">
+      <Text layoutX="1523.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Source:" wrappingWidth="98.13675689697266">
          <font>
             <Font name="Yu Gothic Light" size="28.0" />
          </font>
       </Text>
-      <Text layoutX="1084.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" wrappingWidth="151.4700698852539">
+      <Text layoutX="1471.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" wrappingWidth="151.4700698852539">
          <font>
             <Font name="Yu Gothic Light" size="28.0" />
          </font>
       </Text>
-      <Text layoutX="1102.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm:" wrappingWidth="151.4700698852539">
+      <Text layoutX="1489.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm:" wrappingWidth="151.4700698852539">
          <font>
             <Font name="Yu Gothic Light" size="28.0" />
          </font>
       </Text>
-      <Button fx:id="searchBtn" disable="true" layoutX="1123.0" layoutY="498.0" mnemonicParsing="false" onAction="#searchBtnOnClick" prefHeight="63.0" prefWidth="335.0" style="-fx-background-color: #00C4FF; -fx-border-radius: 100px; -fx-background-radius: 100px;" text="Search">
+      <Button fx:id="searchBtn" disable="true" layoutX="1510.0" layoutY="533.0" mnemonicParsing="false" onAction="#searchBtnOnClick" prefHeight="63.0" prefWidth="335.0" style="-fx-background-color: #00C4FF; -fx-border-radius: 100px; -fx-background-radius: 100px;" text="Search">
          <font>
             <Font name="Yu Gothic Medium" size="24.0" />
          </font>
@@ -65,7 +64,7 @@
             </DropShadow>
          </effect>
       </Button>
-      <ComboBox id="cb" fx:id="destinationComboBox" layoutX="1236.0" layoutY="164.0" prefHeight="38.0" prefWidth="172.0" style="-fx-background-radius: 10px; -fx-background-color: #00C4FF;">
+      <ComboBox id="cb" fx:id="destinationComboBox" layoutX="1623.0" layoutY="199.0" prefHeight="53.0" prefWidth="243.0" style="-fx-background-radius: 10px; -fx-background-color: #00C4FF;">
          <effect>
             <DropShadow height="9.04" offsetY="5.0" radius="1.7599999999999998" width="0.0">
                <color>
@@ -74,7 +73,7 @@
             </DropShadow>
          </effect>
       </ComboBox>
-      <ComboBox id="cb" fx:id="algorithmComboBox" layoutX="1234.0" layoutY="275.0" prefHeight="38.0" prefWidth="172.0" style="-fx-background-radius: 10px; -fx-background-color: #00C4FF;">
+      <ComboBox id="cb" fx:id="algorithmComboBox" layoutX="1621.0" layoutY="310.0" prefHeight="53.0" prefWidth="243.0" style="-fx-background-radius: 10px; -fx-background-color: #00C4FF;">
          <effect>
             <DropShadow height="9.04" offsetY="5.0" radius="1.7599999999999998" width="0.0">
                <color>
@@ -83,27 +82,27 @@
             </DropShadow>
          </effect>
       </ComboBox>
-      <Text fx:id="pathString" layoutX="14.0" layoutY="1043.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="1008.1366767883301">
+      <Text fx:id="pathString" layoutX="14.0" layoutY="1040.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path:" wrappingWidth="1868.13667678833">
          <font>
             <Font name="Yu Gothic Medium" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="txtTotalCost" layoutX="1055.0" layoutY="640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total cost: Place holder" wrappingWidth="470.6380157470703">
+      <Text fx:id="txtTotalCost" layoutX="1442.0" layoutY="675.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total cost: Place holder" wrappingWidth="470.6380157470703">
          <font>
             <Font name="Yu Gothic Light" size="26.0" />
          </font>
       </Text>
-      <Text layoutX="1055.0" layoutY="716.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time complexity: Place holder" wrappingWidth="435.75">
+      <Text fx:id="txtTimeComplexity" layoutX="1442.0" layoutY="751.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time complexity: Place holder" wrappingWidth="435.75">
          <font>
             <Font name="Yu Gothic Light" size="26.0" />
          </font>
       </Text>
-      <Text layoutX="1055.0" layoutY="794.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total time: Place holder" wrappingWidth="453.30470275878906">
+      <Text fx:id="txtTotalTime" layoutX="1442.0" layoutY="829.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total time: Place holder" wrappingWidth="453.30470275878906">
          <font>
             <Font name="Yu Gothic Light" size="26.0" />
          </font>
       </Text>
-      <Button id="citiesFileChooserBtn" fx:id="citiesFileChooserBtn" layoutX="1069.0" layoutY="393.0" mnemonicParsing="false" onAction="#openCitiesFileChooser" prefHeight="40.0" prefWidth="133.0" style="-fx-background-color: #00C4FF; -fx-border-radius: 20px; -fx-background-radius: 20px;" text="Cities File">
+      <Button id="citiesFileChooserBtn" fx:id="citiesFileChooserBtn" layoutX="1456.0" layoutY="428.0" mnemonicParsing="false" onAction="#openCitiesFileChooser" prefHeight="40.0" prefWidth="133.0" style="-fx-background-color: #00C4FF; -fx-border-radius: 20px; -fx-background-radius: 20px;" text="Cities File">
          <font>
             <Font name="Yu Gothic Medium" size="14.0" />
          </font>
@@ -118,13 +117,13 @@
             </DropShadow>
          </effect>
       </Button>
-      <Line endX="141.5299072265625" endY="768.0" layoutX="875.0" layoutY="306.0" startX="141.5299072265625" startY="-236.0" />
-      <Line endX="332.0" layoutX="1201.0" layoutY="599.0" startX="-152.9700927734375" />
-      <ScrollPane layoutY="50.0" prefHeight="959.0" prefWidth="1014.0">
+      <Line endX="141.5299072265625" endY="768.0" layoutX="1293.0" layoutY="312.0" startX="141.5299072265625" startY="-236.0" />
+      <Line endX="332.0" layoutX="1588.0" layoutY="634.0" startX="-152.9700927734375" />
+      <ScrollPane layoutY="50.0" prefHeight="959.0" prefWidth="1431.0">
          <content>
             <AnchorPane fx:id="mapPane" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="2633.0" fitWidth="1014.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="2633.0" fitWidth="1650.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../Images/1200px-Mandatory_Palestine_location_map.svg.png" />
                      </image>
@@ -133,7 +132,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button fx:id="roadsFileChooserBtn" disable="true" layoutX="1225.0" layoutY="393.0" mnemonicParsing="false" onAction="#openRoadsFileChooser" prefHeight="40.0" prefWidth="133.0" style="-fx-background-color: #00C4FF; -fx-border-radius: 20px; -fx-background-radius: 20px;" text="Roads File">
+      <Button fx:id="roadsFileChooserBtn" disable="true" layoutX="1612.0" layoutY="428.0" mnemonicParsing="false" onAction="#openRoadsFileChooser" prefHeight="40.0" prefWidth="133.0" style="-fx-background-color: #00C4FF; -fx-border-radius: 20px; -fx-background-radius: 20px;" text="Roads File">
          <font>
             <Font name="Yu Gothic Medium" size="14.0" />
          </font>
@@ -148,7 +147,7 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="airDistanceFileChooserBtn" disable="true" layoutX="1380.0" layoutY="393.0" mnemonicParsing="false" onAction="#openAirDistanceFileChooser" prefHeight="40.0" prefWidth="133.0" style="-fx-background-color: #00C4FF; -fx-border-radius: 20px; -fx-background-radius: 20px;" text="Air Distance File">
+      <Button fx:id="airDistanceFileChooserBtn" disable="true" layoutX="1767.0" layoutY="428.0" mnemonicParsing="false" onAction="#openAirDistanceFileChooser" prefHeight="40.0" prefWidth="133.0" style="-fx-background-color: #00C4FF; -fx-border-radius: 20px; -fx-background-radius: 20px;" text="Air Distance File">
          <font>
             <Font name="Yu Gothic Medium" size="14.0" />
          </font>
